@@ -348,4 +348,3 @@ D:\Angular Projects\E-Commerce\server-side\E-Commerce\obj\Debug\net8.0\E-Commerc
 D:\Angular Projects\E-Commerce\server-side\E-Commerce\obj\Debug\net8.0\E-Commerce.genruntimeconfig.cache
 D:\Angular Projects\E-Commerce\server-side\E-Commerce\obj\Debug\net8.0\ref\E-Commerce.dll
 D:\Angular Projects\E-Commerce\server-side\E-Commerce\obj\Debug\net8.0\E-Commerce.sourcelink.json
-D:\Angular Projects\E-Commerce\server-side\E-Commerce\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
