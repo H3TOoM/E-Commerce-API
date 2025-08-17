@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using E_Commerce.Repoistries;
+using E_Commerce.Repoistries.Base;
+using E_Commerce.Services;
+using E_Commerce.Services.Base;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -34,6 +38,14 @@ builder.Services.AddDbContext<E_Commerce.Data.AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+
+// Register UnitOfWork and Repositories
+builder.Services.AddScoped(typeof(IMainRepoistory<>), typeof(MainRepoistory<>));
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+
+
+// Register services
+builder.Services.AddScoped<IProductService,ProductService>();
 
 
 var config = builder.Configuration;
@@ -106,7 +118,7 @@ app.UseStaticFiles();
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || true)
 {
     app.UseSwagger();
     app.UseSwaggerUI();

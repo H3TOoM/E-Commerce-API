@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qxEL/aNB6fk=",
+  "dgSpecHash": "z9Ow6BbuLSI=",
   "success": true,
-  "projectFilePath": "D:\\Angular Projects\\E-Commerce\\server-side\\E-Commerce\\E-Commerce.csproj",
+  "projectFilePath": "D:\\Web API Projects\\E-Commerce-API\\E-Commerce\\E-Commerce.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Magico\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Magico\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

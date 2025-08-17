@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Angular Projects\\E-Commerce\\server-side\\E-Commerce\\E-Commerce.csproj": {}
+    "D:\\Web API Projects\\E-Commerce-API\\E-Commerce\\E-Commerce.csproj": {}
   },
   "projects": {
-    "D:\\Angular Projects\\E-Commerce\\server-side\\E-Commerce\\E-Commerce.csproj": {
+    "D:\\Web API Projects\\E-Commerce-API\\E-Commerce\\E-Commerce.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Angular Projects\\E-Commerce\\server-side\\E-Commerce\\E-Commerce.csproj",
+        "projectUniqueName": "D:\\Web API Projects\\E-Commerce-API\\E-Commerce\\E-Commerce.csproj",
         "projectName": "E-Commerce",
-        "projectPath": "D:\\Angular Projects\\E-Commerce\\server-side\\E-Commerce\\E-Commerce.csproj",
+        "projectPath": "D:\\Web API Projects\\E-Commerce-API\\E-Commerce\\E-Commerce.csproj",
         "packagesPath": "C:\\Users\\Magico\\.nuget\\packages\\",
-        "outputPath": "D:\\Angular Projects\\E-Commerce\\server-side\\E-Commerce\\obj\\",
+        "outputPath": "D:\\Web API Projects\\E-Commerce-API\\E-Commerce\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\VS COMMUNITY\\TOOLS\\NuGetPackages"
@@ -100,7 +100,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
