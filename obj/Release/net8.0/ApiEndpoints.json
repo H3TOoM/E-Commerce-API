@@ -163,7 +163,7 @@
   {
     "ContainingType": "E_Commerce.Controllers.CartItemController",
     "Method": "AddItemToCart",
-    "RelativePath": "api/CartItem/add",
+    "RelativePath": "api/CartItem",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -183,24 +183,8 @@
   },
   {
     "ContainingType": "E_Commerce.Controllers.CartItemController",
-    "Method": "DeleteCartItem",
-    "RelativePath": "api/CartItem/delete/{productId}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "productId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "E_Commerce.Controllers.CartItemController",
     "Method": "UpdateCartItem",
-    "RelativePath": "api/CartItem/update",
+    "RelativePath": "api/CartItem",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -214,6 +198,22 @@
         "Name": "quantity",
         "Type": "System.Int32",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "E_Commerce.Controllers.CartItemController",
+    "Method": "DeleteCartItem",
+    "RelativePath": "api/CartItem/{productId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

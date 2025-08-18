@@ -243,9 +243,7 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/CartItem/add": {
+      },
       "post": {
         "tags": [
           "CartItem"
@@ -273,9 +271,7 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/CartItem/update": {
+      },
       "put": {
         "tags": [
           "CartItem"
@@ -305,7 +301,7 @@
         }
       }
     },
-    "/api/CartItem/delete/{productId}": {
+    "/api/CartItem/{productId}": {
       "delete": {
         "tags": [
           "CartItem"

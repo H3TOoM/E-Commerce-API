@@ -41,11 +41,13 @@ builder.Services.AddDbContext<E_Commerce.Data.AppDbContext>(options =>
 
 // Register UnitOfWork and Repositories
 builder.Services.AddScoped(typeof(IMainRepoistory<>), typeof(MainRepoistory<>));
+builder.Services.AddScoped<ICartItemRepoistory, CartItemRepoistory>();
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 
 // Register services
 builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<ICartItemService, CartItemService>();
 
 
 var config = builder.Configuration;
