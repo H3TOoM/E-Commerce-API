@@ -48,6 +48,7 @@ builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 // Register services
 builder.Services.AddScoped<IProductService,ProductService>();
 builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
 var config = builder.Configuration;
