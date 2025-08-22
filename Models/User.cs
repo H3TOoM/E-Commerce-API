@@ -19,7 +19,8 @@ namespace E_Commerce.Models
         [StringLength(100, MinimumLength = 6)]
         public string PasswordHash { get; set; }
 
-        public string Role { get; set; } = "Customer";
+        [Required]
+        public string Role { get; set; }
 
         public ICollection<Order> Orders { get; set; }
         public Cart Cart { get; set; }

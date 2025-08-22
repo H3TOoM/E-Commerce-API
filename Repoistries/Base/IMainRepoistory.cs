@@ -21,5 +21,7 @@ namespace E_Commerce.Repoistries.Base
 
         Task<string> DeleteAsync( int id );
 
+        
+
     }
 }
