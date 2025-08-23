@@ -1,138 +1,128 @@
-﻿using E_Commerce.Data;
-using E_Commerce.DTOs;
-using E_Commerce.Models;
+﻿using E_Commerce.DTOs;
+using E_Commerce.Services.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace E_Commerce.Controllers
 {
-    [Route("api/[controller]")]
+    [Route( "api/[controller]" )]
     [ApiController]
     public class AddressController : ControllerBase
     {
 
-
-        private readonly AppDbContext _context;
-        public AddressController(AppDbContext context)
+        private readonly IAddressService _addressService;
+        public AddressController( IAddressService addressService )
         {
-            _context = context;
+            _addressService = addressService;
         }
+
 
 
         // Get the user ID from claims
-        private int? GetUserIdFromClaims()
+        private int getUserIdFromClaims()
         {
-            var idClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
-            if (idClaim == null) return null;
-            return int.Parse(idClaim.Value);
+            var idClaim = User.Claims.FirstOrDefault( c => c.Type == ClaimTypes.NameIdentifier );
+            if (idClaim == null)
+            {
+                throw new UnauthorizedAccessException( "User not authenticated" );
+            }
+            return int.Parse( idClaim.Value );
+
         }
 
 
 
-        // Get all addresses for the user
+        // Get addresses by user id
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAddresses()
         {
+            var userId = getUserIdFromClaims();
+            var addresses = await _addressService.GetAddressesToUser( userId );
+            if (!addresses.Any())
+                return NotFound( "No addresses found for the user." );
 
-            var userId = GetUserIdFromClaims();
-            // Check if the user is authenticated
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
-            // Fetch all addresses for the authenticated user
-            var addresses = await _context.Addresses
-                .Where(a => a.UserId == userId)
-                .ToListAsync();
-            if (addresses == null || !addresses.Any())
-            {
-                return NotFound();
-            }
-            return Ok(addresses);
+            return Ok( addresses );
         }
 
 
-        // Add a new address
+        // Get address by id
         [Authorize]
-        [HttpPost("add")]
-        public async Task<IActionResult> AddAddress([FromBody] AddressDto dto)
+        [HttpGet( "{id}" )]
+        public async Task<IActionResult> GetAddressById( int id )
         {
-
-            var userId = GetUserIdFromClaims();
-            // Check if the user is authenticated
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-            if (dto == null)
-            {
-                return BadRequest("Address data is required");
-            }
-
-            // Validate the address data
-            var address = new Address
-            {
-                UserId = (int)userId,
-                Country = dto.Country,
-                City = dto.City,
-                Street = dto.Street
-            };
-
-            // save the address to the database
-            _context.Addresses.Add(address);
-            await _context.SaveChangesAsync();
-
-
-            // Return the created address
-            return Ok(address);
-        }
-
-
-        // delete an address
-        [Authorize]
-        [HttpDelete("delete/{Id}")]
-        public async Task<IActionResult> DeleteAddress(int Id)
-        {
-
-            var userId = GetUserIdFromClaims();
-
-            // Check if the user is authenticated
-            if (userId == null)
-            {
-                return Unauthorized("User not authenticated");
-            }
-
-            var address = await _context.Addresses
-            .FirstOrDefaultAsync(a => a.Id == Id && a.UserId == userId);
+            var userId = getUserIdFromClaims();
+            var address = await _addressService.GetAddressById( id );
             if (address == null)
             {
-                return NotFound("Address not found or does not belong to the user");
+                return NotFound( "Address not found." );
             }
-            _context.Addresses.Remove(address);
-            await _context.SaveChangesAsync();
-            return Ok("Address deleted successfully");
+            return Ok( address );
         }
 
 
-        // Get my address
+        // Add new address
         [Authorize]
-        [HttpGet("myAddresses")]
-        public async Task<IActionResult> GetMyAddresses()
+        [HttpPost]
+        public async Task<IActionResult> AddAddress( AddressDto dto )
         {
-            var userId = GetUserIdFromClaims();
-            if (userId == null)
+            try
             {
-                return Unauthorized("User not authenticated");
+                var userId = getUserIdFromClaims();
+                var address = await _addressService.AddAddress( dto );
+                return CreatedAtAction( nameof( GetAddresses ), new { id = address.Id }, address );
             }
-
-            var Addresses = await _context.Addresses
-                .Where(a => a.UserId == userId)
-                .ToListAsync();
-
-            return Ok(Addresses);
+            catch (Exception ex)
+            {
+                return BadRequest( ex.Message );
+            }
         }
+
+        // Update address
+        [Authorize]
+        [HttpPut( "{id}" )]
+        public async Task<IActionResult> UpdateAddress( int id, AddressDto dto )
+        {
+            try
+            {
+                var userId = getUserIdFromClaims();
+                var address = await _addressService.UpdateAddress( id, dto );
+                if (address == null)
+                {
+                    return NotFound( "Address not found." );
+                }
+                return Ok( address );
+            }
+            catch (Exception ex)
+            {
+                return BadRequest( ex.Message );
+            }
+        }
+
+
+        // Delete address
+        [Authorize]
+        [HttpDelete( "{id}" )]
+        public async Task<IActionResult> DeleteAddress( int id )
+        {
+            try
+            {
+                var userId = getUserIdFromClaims();
+                var success = await _addressService.DeleteAddress( id );
+                if (!success)
+                {
+                    return NotFound( "Address not found." );
+                }
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest( ex.Message );
+            }
+        }
+
+
+
     }
 }

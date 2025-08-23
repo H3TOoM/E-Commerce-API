@@ -76,7 +76,7 @@
   {
     "ContainingType": "E_Commerce.Controllers.AddressController",
     "Method": "AddAddress",
-    "RelativePath": "api/Address/add",
+    "RelativePath": "api/Address",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -91,14 +91,14 @@
   },
   {
     "ContainingType": "E_Commerce.Controllers.AddressController",
-    "Method": "DeleteAddress",
-    "RelativePath": "api/Address/delete/{Id}",
-    "HttpMethod": "DELETE",
+    "Method": "GetAddressById",
+    "RelativePath": "api/Address/{id}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Id",
+        "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -107,12 +107,39 @@
   },
   {
     "ContainingType": "E_Commerce.Controllers.AddressController",
-    "Method": "GetMyAddresses",
-    "RelativePath": "api/Address/myAddresses",
-    "HttpMethod": "GET",
+    "Method": "UpdateAddress",
+    "RelativePath": "api/Address/{id}",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "E_Commerce.DTOs.AddressDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "E_Commerce.Controllers.AddressController",
+    "Method": "DeleteAddress",
+    "RelativePath": "api/Address/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

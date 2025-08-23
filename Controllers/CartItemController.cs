@@ -2,6 +2,7 @@
 using E_Commerce.Services.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace E_Commerce.Controllers
 {
@@ -20,7 +21,7 @@ namespace E_Commerce.Controllers
         // Get the user ID from claims
         private int getUserIdFromClaims()
         {
-            var idClaim = User.Claims.FirstOrDefault( c => c.Type == "Id" );
+            var idClaim = User.Claims.FirstOrDefault( c => c.Type == ClaimTypes.NameIdentifier );
             if (idClaim == null)
             {
                 throw new UnauthorizedAccessException( "User not authenticated" );

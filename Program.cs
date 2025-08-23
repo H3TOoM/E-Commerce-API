@@ -43,6 +43,7 @@ builder.Services.AddDbContext<E_Commerce.Data.AppDbContext>(options =>
 builder.Services.AddScoped(typeof(IMainRepoistory<>), typeof(MainRepoistory<>));
 builder.Services.AddScoped<ICartItemRepoistory, CartItemRepoistory>();
 builder.Services.AddScoped<IAccountRepoistory, AccountRepository>();
+builder.Services.AddScoped<IAddressRepoistory,AddressRepoistory >();
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 
@@ -52,6 +53,7 @@ builder.Services.AddScoped<ICartItemService, CartItemService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 
 
 var config = builder.Configuration;

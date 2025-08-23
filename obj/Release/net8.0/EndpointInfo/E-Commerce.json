@@ -121,9 +121,7 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/Address/add": {
+      },
       "post": {
         "tags": [
           "Address"
@@ -154,14 +152,14 @@
         }
       }
     },
-    "/api/Address/delete/{Id}": {
-      "delete": {
+    "/api/Address/{id}": {
+      "get": {
         "tags": [
           "Address"
         ],
         "parameters": [
           {
-            "name": "Id",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -175,12 +173,61 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/Address/myAddresses": {
-      "get": {
+      },
+      "put": {
         "tags": [
           "Address"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Address"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -840,6 +887,10 @@
       "AddressDto": {
         "type": "object",
         "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "country": {
             "type": "string",
             "nullable": true
