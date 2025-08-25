@@ -246,9 +246,7 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/Cart/add": {
+      },
       "post": {
         "tags": [
           "Cart"
@@ -278,7 +276,19 @@
         }
       }
     },
-    "/api/Cart/remove": {
+    "/api/Cart/my-cart": {
+      "get": {
+        "tags": [
+          "Cart"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Cart/{productId}": {
       "delete": {
         "tags": [
           "Cart"
@@ -286,7 +296,8 @@
         "parameters": [
           {
             "name": "productId",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"

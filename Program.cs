@@ -44,6 +44,7 @@ builder.Services.AddScoped(typeof(IMainRepoistory<>), typeof(MainRepoistory<>));
 builder.Services.AddScoped<ICartItemRepoistory, CartItemRepoistory>();
 builder.Services.AddScoped<IAccountRepoistory, AccountRepository>();
 builder.Services.AddScoped<IAddressRepoistory,AddressRepoistory >();
+builder.Services.AddScoped<ICartRepoistory,CartRepoistory >();
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 
@@ -54,7 +55,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
-
+builder.Services.AddScoped<ICartService, CartService>();
 
 var config = builder.Configuration;
 var jwtKey = config["Jwt:Key"];

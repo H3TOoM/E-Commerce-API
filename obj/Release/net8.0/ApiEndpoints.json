@@ -144,7 +144,7 @@
   },
   {
     "ContainingType": "E_Commerce.Controllers.CartController",
-    "Method": "GetCartByUserId",
+    "Method": "GetAllCarts",
     "RelativePath": "api/Cart",
     "HttpMethod": "GET",
     "IsController": true,
@@ -154,8 +154,8 @@
   },
   {
     "ContainingType": "E_Commerce.Controllers.CartController",
-    "Method": "AddItemToCart",
-    "RelativePath": "api/Cart/add",
+    "Method": "CreateCart",
+    "RelativePath": "api/Cart",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -175,6 +175,22 @@
   },
   {
     "ContainingType": "E_Commerce.Controllers.CartController",
+    "Method": "DeleteItemFromCart",
+    "RelativePath": "api/Cart/{productId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "E_Commerce.Controllers.CartController",
     "Method": "ClearCart",
     "RelativePath": "api/Cart/clear",
     "HttpMethod": "DELETE",
@@ -185,18 +201,12 @@
   },
   {
     "ContainingType": "E_Commerce.Controllers.CartController",
-    "Method": "RemoveItemFromCart",
-    "RelativePath": "api/Cart/remove",
-    "HttpMethod": "DELETE",
+    "Method": "GetCartByUserId",
+    "RelativePath": "api/Cart/my-cart",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "productId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

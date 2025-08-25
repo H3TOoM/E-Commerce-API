@@ -85,7 +85,7 @@ namespace E_Commerce.Services
 
             // create a unique image name
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension( image.FileName );
-            var imagePath = Path.Combine( "wwwroot", "images", "products", fileName );
+            var imagePath = Path.Combine( "wwwroot", "images", fileName );
             using (var stream = new FileStream(imagePath, FileMode.Create))
             {
                 await image.CopyToAsync(stream);
@@ -97,7 +97,7 @@ namespace E_Commerce.Services
                 Title = dto.Title,
                 Description = dto.Description,
                 Price = dto.Price,
-                ImageUrl = $"/images/products/{fileName}",
+                ImageUrl = $"/images/{fileName}",
                 CategoryId = dto.CategoryId
             };
 
