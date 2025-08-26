@@ -19,3 +19,4 @@ wwwroot\images\d8504b86-3a86-4b20-b007-79ead6d76392.png
 wwwroot\images\ed489fbb-244e-40e7-8923-27a13313d6ec.png
 wwwroot\images\fc74bf4f-d42f-406a-93d7-66ec78dd5d4a.png
 wwwroot\images\fd1d1f17-e50f-4b5e-8f35-3d7b7e95ba3a.png
+wwwroot\images\c3e90896-c39c-43bd-bf21-83a7954c7cad.webp

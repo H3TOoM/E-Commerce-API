@@ -1,139 +1,118 @@
-﻿using E_Commerce.Data;
-using E_Commerce.DTOs;
+﻿using E_Commerce.DTOs;
 using E_Commerce.Models;
+using E_Commerce.Services.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace E_Commerce.Controllers
 {
-    [Route("api/[controller]")]
+    [Route( "api/[controller]" )]
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        public OrderController(AppDbContext context)
-        {
-            _context = context;
-        }
 
+        private readonly IOrderService _orderService;
+        public OrderController( IOrderService orderService )
+        {
+            _orderService = orderService;
+        }
 
         // Get the user ID from claims
-        private int? getUserIdFromClaims()
+        private int getUserIdFromClaims()
         {
-            var idClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            if (idClaim == null) return null;
-            return int.Parse(idClaim.Value);
-        }
-
-        // Get All Orders 
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> getAllOrders()
-        {
-            var ordres = await _context.Orders
-                .Include(o => o.OrderItems)
-                .ThenInclude(oi => oi.Product)
-                .ToListAsync();
-
-            return Ok(ordres);
-        }
-
-
-        // get My Orders 
-        [Authorize]
-        [HttpGet("myOrders")]
-        public async Task<IActionResult> getMyOrders()
-        {
-
-            var userId = getUserIdFromClaims();
-
-            // Check if the user is authenticated
-            if (userId == null)
+            var idClaim = User.Claims.FirstOrDefault( c => c.Type == ClaimTypes.NameIdentifier );
+            if (idClaim == null)
             {
-                return Unauthorized();
+                throw new UnauthorizedAccessException( "User not authenticated" );
             }
-
-
-            var orders = await _context.Orders
-                .Where(o => o.UserId == userId)
-                .Include(o => o.OrderItems)
-                .ThenInclude(oi => oi.Product)
-                .ToListAsync();
-
-
-            return Ok(orders);
+            return int.Parse( idClaim.Value );
 
         }
 
 
-        // Add Order
+
+
+        [Authorize( Roles = "admin" )]
+        [HttpGet]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            try
+            {
+                var orders = await _orderService.GetAllOrdersAsync();
+                if (orders == null || !orders.Any())
+                    return NotFound( "No Orders yet!" );
+
+                return Ok( orders );
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest( ex.Message );
+            }
+        }
+
+
+        [Authorize]
+        [HttpGet( "my-orders" )]
+        public async Task<IActionResult> GetMyOrders()
+        {
+            try
+            {
+                var userId = getUserIdFromClaims();
+                var orders = await _orderService.GetUserOrdersAsync( userId );
+                if (orders == null || !orders.Any())
+                    return NotFound( "No Orders yet!" );
+
+                return Ok( orders );
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest( ex.Message );
+            }
+        }
+
+
+        // Get Order By Id
+        [Authorize]
+        [HttpGet( "{orderId}" )]
+        public async Task<IActionResult> GetOrderById(int orderId )
+        {
+            var order = await _orderService.GetOrderByIdAsync( orderId );
+            if (order == null)
+                return NotFound();
+
+            return Ok( order );
+        }
+
+
+        // Create Order
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> addOrder([FromBody] OrderDto dto)
-        {
-            if (dto == null)
-            {
-                return BadRequest("Order data is required.");
-            }
-
-
-            var userId = getUserIdFromClaims();
-            // Check if the user is authenticated
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
-
-            // Create a new order
-            var order = new Order
-            {
-                UserId = (int)userId,
-                TotalAmount = dto.TotalAmount,
-                OrderDate = DateTime.UtcNow,
-                Status = "Pending",
-                OrderItems = dto.OrderItems.Select(item => new OrderItem
-                {
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-
-                }).ToList()
-            };
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-            return Ok(order);
-
-        }
-
-
-        // Delete Order 
-        [Authorize]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> CreateOrder( OrderDto dto )
         {
             var userId = getUserIdFromClaims();
-
-            var order = await _context.Orders
-                             .FirstOrDefaultAsync(o => o.Id == id && o.UserId == userId);
-
+            var order = await _orderService.CreateOrderAsync( userId, dto );
             if (order == null)
-            {
-                return NotFound("Order not found or not authorized to delete.");
-            }
+                return NotFound();
 
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return Ok(order);
-
-
+            return Ok( order );
         }
 
 
 
+        [Authorize(Roles = "admin")]
+        [HttpDelete( "{orderId}" )]
+        public async Task<IActionResult> DeleteOrder(int orderId)
+        {
+            var result = await _orderService.DeleteOrderAsync(orderId);
+            if(!result)
+                return NotFound();
 
+            return NoContent();
+        }
+        
 
 
     }
