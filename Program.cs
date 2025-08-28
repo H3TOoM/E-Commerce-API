@@ -46,6 +46,7 @@ builder.Services.AddScoped<IAccountRepoistory, AccountRepository>();
 builder.Services.AddScoped<IAddressRepoistory,AddressRepoistory >();
 builder.Services.AddScoped<ICartRepoistory,CartRepoistory >();
 builder.Services.AddScoped<IOrderRepoistory, OrderRepoistory>();
+builder.Services.AddScoped<IOrderItemRepoistory, OrderItemRepoistory >();
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 
@@ -57,7 +58,8 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<IOrderService, OrderService>();  
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderItemsSevice, OrderItemService>();
 
 var config = builder.Configuration;
 var jwtKey = config["Jwt:Key"];

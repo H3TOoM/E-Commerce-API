@@ -37,7 +37,7 @@ namespace E_Commerce.Controllers
 
 
         // Get All Carts
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllCarts()
         {

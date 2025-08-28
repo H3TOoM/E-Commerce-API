@@ -45,7 +45,7 @@ namespace E_Commerce.Controllers
         }
 
         // Create New Product
-        [Authorize]
+        [Authorize(Roles ="admin")]
         [HttpPost]
         public async Task<IActionResult> AddProduct([FromForm] ProductDto dto, IFormFile image)
         {
@@ -60,7 +60,7 @@ namespace E_Commerce.Controllers
 
 
         // Update Product
-        [Authorize]
+        [Authorize( Roles = "admin" )]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductDto dto, IFormFile image)
         {
@@ -74,7 +74,7 @@ namespace E_Commerce.Controllers
 
 
         // Delete Product
-        [Authorize]
+        [Authorize( Roles = "admin" )]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {

@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Data;
 using E_Commerce.DTOs;
 using E_Commerce.Models;
+using E_Commerce.Services.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,10 @@ namespace E_Commerce.Controllers
     [ApiController]
     public class OrderItemController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        public OrderItemController(AppDbContext context)
+        private readonly IOrderItemsSevice _orderItemsSevice;
+        public OrderItemController(IOrderItemsSevice orderItemsSevice)
         {
-            _context = context;
+           _orderItemsSevice = orderItemsSevice;
         }
 
 
@@ -23,10 +24,7 @@ namespace E_Commerce.Controllers
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetAllOrderItems(int orderId)
         {
-            var orderItems = await _context.OrderItems
-                .Where(oi => oi.OrderId == orderId)
-                .Include(oi => oi.Product)
-                .ToListAsync();
+            var orderItems = await _orderItemsSevice.GetItemsByOrderIdAsync(orderId);
 
             if (orderItems == null || !orderItems.Any())
             {
@@ -47,29 +45,7 @@ namespace E_Commerce.Controllers
                 return BadRequest("Order item data is required.");
             }
 
-            var product = await _context.Products.FindAsync(dto.ProductId);
-            if (product == null)
-            {
-                return NotFound("Product not found.");
-            }
-
-            var order = await _context.Orders.FindAsync(dto.OrderId);
-            if (order == null)
-            {
-                return NotFound("Order not found.");
-            }
-
-            var orderItem = new OrderItem
-            {
-                OrderId = dto.OrderId,
-                ProductId = dto.ProductId,
-                Quantity = dto.Quantity,
-            };
- 
-
-            _context.OrderItems.Add(orderItem);
-            await _context.SaveChangesAsync();
-
+           var orderItem =await _orderItemsSevice.CreateOrderItemAsync(dto);
 
             return Ok(orderItem);   
 
@@ -81,14 +57,11 @@ namespace E_Commerce.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrderItem(int id)
         {
-            var orderItem = await _context.OrderItems.FindAsync(id);
-            if (orderItem == null)
-            {
-                return NotFound("Order item not found.");
-            }
-            _context.OrderItems.Remove(orderItem);
-            await _context.SaveChangesAsync();
-            return Ok("Order item deleted successfully.");
+            var result = await _orderItemsSevice.DeleteOrderItemAsync( id );
+            if (!result)
+                return NotFound();
+
+            return NoContent();
         }
 
 

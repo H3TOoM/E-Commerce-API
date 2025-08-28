@@ -74,7 +74,7 @@ namespace E_Commerce.Controllers
         }
 
         // Get User by ID
-        [Authorize]
+        [Authorize(Roles ="admin")]
         [HttpGet( "{id}" )]
         public async Task<IActionResult> GetUserById( int id )
         {

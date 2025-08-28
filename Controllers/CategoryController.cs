@@ -7,6 +7,8 @@ namespace E_Commerce.Controllers
 {
     [Route( "api/[controller]" )]
     [ApiController]
+    [Authorize(Roles ="admin")]
+
     public class CategoryController : ControllerBase
     {
 
@@ -19,7 +21,6 @@ namespace E_Commerce.Controllers
 
 
         // Get All Categories
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
@@ -32,7 +33,6 @@ namespace E_Commerce.Controllers
         }
 
         // Get Category By Id 
-        [Authorize]
         [HttpGet( "{id}" )]
         public async Task<IActionResult> GetCategoryById( int id )
         {
@@ -47,7 +47,6 @@ namespace E_Commerce.Controllers
 
 
         // Add New Category
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateCategory( CategoryDto dto )
         {
@@ -64,7 +63,6 @@ namespace E_Commerce.Controllers
 
 
         // Get Category By Id and Update Category
-        [Authorize]
         [HttpPut( "{id}" )]
 
         public async Task<IActionResult> UpdateCategory( int id, CategoryDto dto )
@@ -91,7 +89,6 @@ namespace E_Commerce.Controllers
         }
 
         // Delete Category
-        [Authorize]
         [HttpDelete( "{id}" )]
         public async Task<IActionResult> DeleteCategory( int id )
         {
